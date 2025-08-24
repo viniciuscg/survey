@@ -147,6 +147,7 @@ type AskOptions struct {
 	Stdio        terminal.Stdio
 	Validators   []Validator
 	PromptConfig PromptConfig
+	PageSize     int
 }
 
 // WithStdio specifies the standard input, output and error files survey
