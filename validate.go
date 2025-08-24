@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/viniciuscg/survey/v2/core"
 )
@@ -125,4 +126,18 @@ func isZero(v reflect.Value) bool {
 
 	// compare the types directly with more general coverage
 	return reflect.DeepEqual(v.Interface(), reflect.Zero(v.Type()).Interface())
+}
+
+// HasYesOrNoPrefix checks if the string starts with 'y' or 'n' (case insensitive) and returns true for 'y' and false for 'n'.
+func HasYesOrNoPrefix(s string) (bool, error) {
+	if strings.HasPrefix(strings.ToLower(s), "y") {
+		return true, nil
+	}
+
+	if strings.HasPrefix(strings.ToLower(s), "n") {
+		return false, nil
+	}
+
+	return false, fmt.Errorf("invalid input: %s", s)
+
 }

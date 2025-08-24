@@ -182,6 +182,27 @@ func TestComposeValidators_passes(t *testing.T) {
 
 }
 
+func TestHasYesOrNoPrefix(t *testing.T) {
+	yesTests := []string{"y", "Y", "yes", "YES", "yEs", "yup", "YEAH", "Yessir"}
+	noTests := []string{"n", "N", "no", "NO", "Nope", "nah", "Naw", "nO"}
+	invalidTests := []string{"", "maybe", "sure", "1", "0", "true", "false", "of course"}
+	for _, test := range yesTests {
+		if valid, err := HasYesOrNoPrefix(test); err != nil || !valid {
+			t.Errorf("HasYesOrNoPrefix failed to validate a yes prefix: %s", test)
+		}
+	}
+	for _, test := range noTests {
+		if valid, err := HasYesOrNoPrefix(test); err != nil || valid {
+			t.Errorf("HasYesOrNoPrefix failed to validate a no prefix: %s", test)
+		}
+	}
+	for _, test := range invalidTests {
+		if _, err := HasYesOrNoPrefix(test); err == nil {
+			t.Errorf("HasYesOrNoPrefix failed to invalidate an invalid prefix: %s", test)
+		}
+	}
+}
+
 func TestComposeValidators_failsOnFirstError(t *testing.T) {
 	// create a validator that requires a string of no more than 10 characters
 	valid := ComposeValidators(
