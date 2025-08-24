@@ -187,17 +187,17 @@ func TestHasYesOrNoPrefix(t *testing.T) {
 	noTests := []string{"n", "N", "no", "NO", "Nope", "nah", "Naw", "nO"}
 	invalidTests := []string{"", "maybe", "sure", "1", "0", "true", "false", "of course"}
 	for _, test := range yesTests {
-		if valid, err := HasYesOrNoPrefix(test); err != nil || !valid {
+		if err := HasYesOrNoPrefix(test); err != nil {
 			t.Errorf("HasYesOrNoPrefix failed to validate a yes prefix: %s", test)
 		}
 	}
 	for _, test := range noTests {
-		if valid, err := HasYesOrNoPrefix(test); err != nil || valid {
+		if err := HasYesOrNoPrefix(test); err != nil {
 			t.Errorf("HasYesOrNoPrefix failed to validate a no prefix: %s", test)
 		}
 	}
 	for _, test := range invalidTests {
-		if _, err := HasYesOrNoPrefix(test); err == nil {
+		if err := HasYesOrNoPrefix(test); err == nil {
 			t.Errorf("HasYesOrNoPrefix failed to invalidate an invalid prefix: %s", test)
 		}
 	}

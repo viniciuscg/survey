@@ -128,16 +128,20 @@ func isZero(v reflect.Value) bool {
 	return reflect.DeepEqual(v.Interface(), reflect.Zero(v.Type()).Interface())
 }
 
-// HasYesOrNoPrefix checks if the string starts with 'y' or 'n' (case insensitive) and returns true for 'y' and false for 'n'.
-func HasYesOrNoPrefix(s string) (bool, error) {
-	if strings.HasPrefix(strings.ToLower(s), "y") {
-		return true, nil
+// HasYesOrNoPrefix is a Validator that checks if input starts with y/n.
+func HasYesOrNoPrefix(ans interface{}) error {
+	s, ok := ans.(string)
+	if !ok {
+		return fmt.Errorf("expected a string but got %T", ans)
 	}
 
-	if strings.HasPrefix(strings.ToLower(s), "n") {
-		return false, nil
+	s = strings.ToLower(s)
+	if strings.HasPrefix(s, "y") {
+		return nil // válido
+	}
+	if strings.HasPrefix(s, "n") {
+		return nil // válido
 	}
 
-	return false, fmt.Errorf("invalid input: %s", s)
-
+	return fmt.Errorf("invalid input: %s (must start with y or n)", s)
 }
