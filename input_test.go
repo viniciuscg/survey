@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/AlecAivazis/survey/v2/core"
-	"github.com/AlecAivazis/survey/v2/terminal"
 	"github.com/stretchr/testify/assert"
+	"github.com/viniciuscg/survey/v2/core"
+	"github.com/viniciuscg/survey/v2/terminal"
 )
 
 func init() {
