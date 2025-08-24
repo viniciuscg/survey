@@ -1,4 +1,10 @@
-module github.com/AlecAivazis/survey/v2
+module github.com/viniciuscg/survey
+go 1.13
+
+require github.com/AlecAivazis/survey/v2 v2.3.7
+
+replace github.com/AlecAivazis/survey/v2 => github.com/viniciuscg/survey v2.3.7
+
 
 require (
 	github.com/Netflix/go-expect v0.0.0-20220104043353-73e0943537d2
@@ -13,5 +19,3 @@ require (
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 	golang.org/x/text v0.4.0
 )
-
-go 1.13
