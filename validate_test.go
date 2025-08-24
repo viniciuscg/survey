@@ -203,6 +203,32 @@ func TestHasYesOrNoPrefix(t *testing.T) {
 	}
 }
 
+func TestEmailValidator(t *testing.T) {
+	validEmails := []string{
+		"email@email.com",
+		"email@hotmail.com",
+		"EmaiL@email.com.br",
+	}
+	invalidEmails := []string{
+		"email",
+		"email@",
+		"@email.com",
+		"email.com",
+		"email@.com",
+		"email@email.",
+	}
+	for _, email := range validEmails {
+		if err := EmailValidator(email); err != nil {
+			t.Errorf("EmailValidator failed to validate a valid email: %s", email)
+		}
+	}
+	for _, email := range invalidEmails {
+		if err := EmailValidator(email); err == nil {
+			t.Errorf("EmailValidator failed to invalidate an invalid email: %s", email)
+		}
+	}
+}
+
 func TestComposeValidators_failsOnFirstError(t *testing.T) {
 	// create a validator that requires a string of no more than 10 characters
 	valid := ComposeValidators(

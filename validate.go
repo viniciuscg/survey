@@ -3,6 +3,7 @@ package survey
 import (
 	"errors"
 	"fmt"
+	"net/mail"
 	"reflect"
 	"strings"
 
@@ -144,4 +145,24 @@ func HasYesOrNoPrefix(ans interface{}) error {
 	}
 
 	return fmt.Errorf("invalid input: %s (must start with y or n)", s)
+}
+
+// EmailValidator is a Validator that checks if input is a valid email address.
+func EmailValidator(ans interface{}) error {
+	s, ok := ans.(string)
+	if !ok {
+		return errors.New("expected a string")
+	}
+
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return errors.New("email cannot be empty")
+	}
+
+	_, err := mail.ParseAddress(s)
+	if err != nil {
+		return errors.New("invalid email address")
+	}
+
+	return nil
 }
